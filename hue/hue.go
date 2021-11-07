@@ -1,6 +1,7 @@
 package hue
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -39,6 +40,34 @@ func List() map[string]light {
 	fmt.Println(lights)
 
 	return lights
+}
+
+func SetStatus(light string, status string) {
+	statusURL := fmt.Sprintf("%s/lights/%s/state", getBaseURL(), light)
+	fmt.Println(statusURL)
+
+	state := false
+	if status == "true" {
+		state = true
+	}
+	requestBody, _ := json.Marshal(map[string]bool{
+		"on": state})
+	fmt.Println(string(requestBody))
+	client := &http.Client{}
+	req, err := http.NewRequest(http.MethodPut, statusURL, bytes.NewBuffer(requestBody))
+	if err != nil {
+		panic(err)
+	}
+
+	// set the request header Content-Type for json
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	resp, err := client.Do(req)
+
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println(resp)
+
 }
 
 func getBaseURL() string {
