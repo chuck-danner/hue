@@ -17,16 +17,15 @@ package cmd
 
 import (
 	"fmt"
-	"sort"
 
 	"github.com/chuck-danner/hue/hue"
 	"github.com/spf13/cobra"
 )
 
-// listCmd represents the list command
-var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List hue lights connect to your system",
+// configCmd represents the config command
+var configCmd = &cobra.Command{
+	Use:   "config",
+	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -34,35 +33,22 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		lights := hue.List()
 
-		//Order the response
-		keys := make([]string, 0, len(lights))
-
-		for k := range lights {
-			keys = append(keys, k)
-		}
-
-		sort.Strings(keys)
-
-		for _, k := range keys {
-			message := fmt.Sprintf("%s: %s : %t", k, lights[k].Name, lights[k].State.On)
-			fmt.Println(message)
-		}
+		fmt.Println(hue.GetConfig())
 
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(configCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// listCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// configCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// configCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
