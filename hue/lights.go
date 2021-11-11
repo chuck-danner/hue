@@ -1,10 +1,7 @@
 package hue
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 )
 
 type light struct {
@@ -17,27 +14,8 @@ type state struct {
 }
 
 func listLights() map[string]light {
-
-	resp, err := http.Get(getLightsURL())
-
-	if err != nil {
-		panic(err.Error())
-	}
-	data, err := ioutil.ReadAll(resp.Body)
-
-	if err != nil {
-		panic(err.Error())
-	}
-
 	lights := make(map[string]light)
-	//fmt.Println(string(data))
-
-	err = json.Unmarshal(data, &lights)
-
-	if err != nil {
-		panic(err.Error())
-	}
-
+	getRequest(getLightsURL(), &lights)
 	return lights
 }
 

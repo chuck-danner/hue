@@ -9,12 +9,20 @@ import (
 	"github.com/spf13/viper"
 )
 
-func List() map[string]light {
+func GetLights() map[string]light {
 	return listLights()
 }
 
 func GetConfig() config {
 	return listConfig()
+}
+
+func GetGroups() map[string]group {
+	return listGroups()
+}
+
+func GetSchedules() map[string]schedule {
+	return listSchedules()
 }
 
 func SetStatus(light string, status string) {
