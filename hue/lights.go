@@ -13,12 +13,12 @@ type state struct {
 	On bool `json:"on"`
 }
 
-func listLights() map[string]light {
+func (h Hue) getLights() map[string]light {
 	lights := make(map[string]light)
-	getRequest(getLightsURL(), &lights)
+	getRequest(h.getLightsURL(), &lights)
 	return lights
 }
 
-func getLightsURL() string {
-	return fmt.Sprintf("%s/%s", getBaseURL(), "lights")
+func (h Hue) getLightsURL() string {
+	return fmt.Sprintf("%s/%s", h.getBaseURL(), "lights")
 }

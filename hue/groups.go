@@ -10,13 +10,13 @@ type group struct {
 	Type   string   `json:"type"`
 }
 
-func listGroups() map[string]group {
+func (h Hue) getGroups() map[string]group {
 
 	groups := make(map[string]group)
-	getRequest(getGroupsURL(), &groups)
+	getRequest(h.getGroupsURL(), &groups)
 	return groups
 }
 
-func getGroupsURL() string {
-	return fmt.Sprintf("%s/%s", getBaseURL(), "groups")
+func (h Hue) getGroupsURL() string {
+	return fmt.Sprintf("%s/%s", h.getBaseURL(), "groups")
 }

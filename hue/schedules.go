@@ -7,12 +7,12 @@ type schedule struct {
 	Description string `json:"description"`
 }
 
-func listSchedules() map[string]schedule {
+func (h Hue) listSchedules() map[string]schedule {
 	schedules := make(map[string]schedule)
-	getRequest(getSchedulesURL(), &schedules)
+	getRequest(h.getSchedulesURL(), &schedules)
 	return schedules
 }
 
-func getSchedulesURL() string {
-	return fmt.Sprintf("%s/%s", getBaseURL(), "schedules")
+func (h Hue) getSchedulesURL() string {
+	return fmt.Sprintf("%s/%s", h.getBaseURL(), "schedules")
 }

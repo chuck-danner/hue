@@ -9,12 +9,12 @@ type config struct {
 	ApivVrsion string `json:"apiversion"`
 }
 
-func listConfig() config {
+func (h Hue) getConfig() config {
 	var configuration config
-	getRequest(getConfigURL(), &configuration)
+	getRequest(h.getConfigURL(), &configuration)
 	return configuration
 }
 
-func getConfigURL() string {
-	return fmt.Sprintf("%s/%s", getBaseURL(), "config")
+func (h Hue) getConfigURL() string {
+	return fmt.Sprintf("%s/%s", h.getBaseURL(), "config")
 }

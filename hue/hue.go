@@ -9,24 +9,36 @@ import (
 	"github.com/spf13/viper"
 )
 
-func GetLights() map[string]light {
-	return listLights()
+type Hue struct {
+	Username string
+	URL      string
 }
 
-func GetConfig() config {
-	return listConfig()
+func DefaultHue() *Hue {
+	return &Hue{
+		Username: viper.GetString("hue.username"),
+		URL:      viper.GetString("hue.url")}
 }
 
-func GetGroups() map[string]group {
-	return listGroups()
+func (h Hue) Lights() map[string]light {
+	return h.getLights()
 }
 
-func GetSchedules() map[string]schedule {
-	return listSchedules()
+func (h Hue) Config() config {
+	return h.getConfig()
 }
 
+func (h Hue) Groups() map[string]group {
+	return h.getGroups()
+}
+
+func (h Hue) Schedules() map[string]schedule {
+	return h.listSchedules()
+}
+
+//TODO: Needs fixed and moved
 func SetStatus(light string, status string) {
-	statusURL := fmt.Sprintf("%s/lights/%s/state", getBaseURL(), light)
+	statusURL := fmt.Sprintf("%s/lights/%s/state", "", light)
 	fmt.Println(statusURL)
 
 	state := false
@@ -53,9 +65,13 @@ func SetStatus(light string, status string) {
 
 }
 
-func getBaseURL() string {
-	username := viper.GetString("hue.username")
-	url := viper.GetString("hue.url")
+func Setup() {
+	discover()
+}
+
+func (hue Hue) getBaseURL() string {
+	username := hue.Username
+	url := hue.URL
 
 	return fmt.Sprintf("http://%s/api/%s", url, username)
 }
