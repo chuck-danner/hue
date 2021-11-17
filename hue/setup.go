@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/mdns"
 )
 
-func discover() {
+func discoverMdns() {
 
 	entriesCh := make(chan *mdns.ServiceEntry, 4)
 	go func() {
@@ -22,4 +22,19 @@ func discover() {
 		fmt.Println(err)
 	}
 	close(entriesCh)
+}
+
+type discover struct {
+	Id         string `json:"id"`
+	InternalIp string `json:"internalipaddress"`
+}
+
+func discoverEndpoint() string {
+	var discover []discover
+
+	getRequest("https://discovery.meethue.com", &discover)
+	if len(discover) == 0 {
+		return ""
+	}
+	return discover[0].InternalIp
 }

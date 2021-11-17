@@ -36,6 +36,10 @@ func (h Hue) Schedules() map[string]schedule {
 	return h.listSchedules()
 }
 
+func (h Hue) Check() check {
+	return h.getCheck()
+}
+
 //TODO: Needs fixed and moved
 func SetStatus(light string, status string) {
 	statusURL := fmt.Sprintf("%s/lights/%s/state", "", light)
@@ -65,8 +69,8 @@ func SetStatus(light string, status string) {
 
 }
 
-func Setup() {
-	discover()
+func Setup() string {
+	return discoverEndpoint()
 }
 
 func (hue Hue) getBaseURL() string {
