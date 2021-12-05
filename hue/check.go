@@ -20,5 +20,5 @@ func (h Hue) getCheck() check {
 }
 
 func (h Hue) getCheckURL() string {
-	return fmt.Sprintf("http://%s/%s", h.URL, "api/0/config")
+	return fmt.Sprintf("%s/%s", h.URL, "api/0/config")
 }
