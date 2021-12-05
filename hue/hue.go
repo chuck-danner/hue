@@ -10,14 +10,14 @@ import (
 )
 
 type Hue struct {
-	Username string
-	URL      string
+	Key string
+	URL string
 }
 
 func DefaultHue() *Hue {
 	return &Hue{
-		Username: viper.GetString("hue.username"),
-		URL:      viper.GetString("hue.url")}
+		Key: viper.GetString("hue.key"),
+		URL: viper.GetString("hue.url")}
 }
 
 func (h Hue) Lights() map[string]light {
@@ -74,8 +74,8 @@ func Setup() string {
 }
 
 func (hue Hue) getBaseURL() string {
-	username := hue.Username
+	username := hue.Key
 	url := hue.URL
 
-	return fmt.Sprintf("http://%s/api/%s", url, username)
+	return fmt.Sprintf("%s/api/%s", url, username)
 }
