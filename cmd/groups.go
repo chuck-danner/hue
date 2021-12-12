@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/chuck-danner/hue/hue"
 	"github.com/spf13/cobra"
 )
 
@@ -35,7 +34,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		groups := hue.DefaultHue().Groups()
+		groups := DefaultHue().Groups()
 		//Order the response
 		keys := make([]string, 0, len(groups))
 

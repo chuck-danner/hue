@@ -5,19 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/spf13/viper"
 )
 
 type Hue struct {
 	Key string
 	URL string
-}
-
-func DefaultHue() *Hue {
-	return &Hue{
-		Key: viper.GetString("hue.key"),
-		URL: viper.GetString("hue.url")}
 }
 
 func (h Hue) Lights() map[string]light {
