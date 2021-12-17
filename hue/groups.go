@@ -13,7 +13,7 @@ type group struct {
 func (h Hue) getGroups() map[string]group {
 
 	groups := make(map[string]group)
-	getRequest(h.getGroupsURL(), &groups)
+	h.getRequest(h.getGroupsURL(), &groups)
 	return groups
 }
 

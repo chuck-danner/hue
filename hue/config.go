@@ -11,7 +11,7 @@ type config struct {
 
 func (h Hue) getConfig() config {
 	var configuration config
-	getRequest(h.getConfigURL(), &configuration)
+	h.getRequest(h.getConfigURL(), &configuration)
 	return configuration
 }
 

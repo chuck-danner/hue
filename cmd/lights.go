@@ -17,7 +17,6 @@ package cmd
 
 import (
 	"fmt"
-	"sort"
 
 	"github.com/spf13/cobra"
 )
@@ -33,19 +32,12 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		lights := DefaultHue().Lights()
+		lights := DefaultHue().Lights().Data
 
 		//Order the response
-		keys := make([]string, 0, len(lights))
 
-		for k := range lights {
-			keys = append(keys, k)
-		}
-
-		sort.Strings(keys)
-
-		for _, k := range keys {
-			message := fmt.Sprintf("%s: %s : %t", k, lights[k].Name, lights[k].State.On)
+		for light := range lights {
+			message := fmt.Sprintf("%s: %s : %t", lights[light].Id, lights[light].Metadata.Name, lights[light].On.On)
 			fmt.Println(message)
 		}
 	},

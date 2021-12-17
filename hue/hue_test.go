@@ -103,7 +103,7 @@ func TestSetStatus(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			SetStatus(tt.args.light, tt.args.status)
+			//SetStatus(tt.args.light, tt.args.status)
 		})
 	}
 }
@@ -136,6 +136,42 @@ func TestHue_getBaseURL(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.hue.getBaseURL(); got != tt.want {
 				t.Errorf("Hue.getBaseURL() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestHue_SetStatus(t *testing.T) {
+	type args struct {
+		id     string
+		status string
+	}
+	tests := []struct {
+		name string
+		h    Hue
+		args args
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.h.SetStatus(tt.args.id, tt.args.status)
+		})
+	}
+}
+
+func TestHue_getV2BaseURL(t *testing.T) {
+	tests := []struct {
+		name string
+		hue  Hue
+		want string
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.hue.getV2BaseURL(); got != tt.want {
+				t.Errorf("Hue.getV2BaseURL() = %v, want %v", got, tt.want)
 			}
 		})
 	}

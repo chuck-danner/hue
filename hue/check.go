@@ -15,7 +15,7 @@ type check struct {
 
 func (h Hue) getCheck() check {
 	var checkConfig check
-	getRequest(h.getCheckURL(), &checkConfig)
+	h.getRequest(h.getCheckURL(), &checkConfig)
 	return checkConfig
 }
 

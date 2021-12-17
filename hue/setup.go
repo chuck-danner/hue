@@ -32,7 +32,7 @@ type discover struct {
 func discoverEndpoint() string {
 	var discover []discover
 
-	getRequest("https://discovery.meethue.com", &discover)
+	//http.DefaultClient.Get("https://discovery.meethue.com", &discover)
 	if len(discover) == 0 {
 		return ""
 	}

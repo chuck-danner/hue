@@ -18,7 +18,6 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/chuck-danner/hue/hue"
 	"github.com/spf13/cobra"
 )
 
@@ -36,7 +35,7 @@ to quickly create a Cobra application.`,
 		fmt.Println(args)
 		light := args[0]
 		status := args[1]
-		hue.SetStatus(light, status)
+		DefaultHue().SetStatus(light, status)
 	},
 }
 

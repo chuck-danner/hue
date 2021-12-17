@@ -1,18 +1,16 @@
 package hue
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"net/http"
 )
 
 type Hue struct {
 	Key string
 	URL string
+	ID  string
 }
 
-func (h Hue) Lights() map[string]light {
+func (h Hue) Lights() lightResponseV2 {
 	return h.getLights()
 }
 
@@ -32,32 +30,14 @@ func (h Hue) Check() check {
 	return h.getCheck()
 }
 
-//TODO: Needs fixed and moved
-func SetStatus(light string, status string) {
-	statusURL := fmt.Sprintf("%s/lights/%s/state", "", light)
-	fmt.Println(statusURL)
-
-	state := false
-	if status == "true" {
-		state = true
+func (h Hue) SetStatus(id string, status string) {
+	set := false
+	if status == "on" {
+		set = true
 	}
-	requestBody, _ := json.Marshal(map[string]bool{
-		"on": state})
-	fmt.Println(string(requestBody))
-	client := &http.Client{}
-	req, err := http.NewRequest(http.MethodPut, statusURL, bytes.NewBuffer(requestBody))
-	if err != nil {
-		panic(err)
-	}
+	light := light{On: state{On: set}}
 
-	// set the request header Content-Type for json
-	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-	resp, err := client.Do(req)
-
-	if err != nil {
-		panic(err.Error())
-	}
-	fmt.Println(resp)
+	h.setLight(id, light)
 
 }
 
@@ -66,8 +46,9 @@ func Setup() string {
 }
 
 func (hue Hue) getBaseURL() string {
-	username := hue.Key
-	url := hue.URL
+	return fmt.Sprintf("%s/api/%s", hue.URL, hue.Key)
+}
 
-	return fmt.Sprintf("%s/api/%s", url, username)
+func (hue Hue) getV2BaseURL() string {
+	return fmt.Sprintf("%s/clip/v2/resource", hue.URL)
 }
